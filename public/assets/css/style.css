@@ -308,7 +308,7 @@ ul.list-check li::before {
 }
 
 #home {
-    background: url(../images/home2.jpg) no-repeat center center;
+    background: url(../images/huskiessss.jpg) no-repeat center center;
     -webkit-background-attachment: fixed;
     background-attachment: fixed;
     background-color: #222;
@@ -586,7 +586,7 @@ SOCIAL ICON
 
 .myphoto {
     position: relative;
-    background: url(../../assets/images/photo-frame.png) bottom center no-repeat;
+    background: bottom center no-repeat;
     background-size: contain;
 }
 
@@ -612,7 +612,7 @@ SOCIAL ICON
 /* === Video Section === */
 
 .video-section {
-    background: url(../images/video-bg.jpg) no-repeat center center;
+    background: url(../images/Ben%20Gowaski%20MOHA%202015%20Cover%20Photo.jpg) no-repeat center center;
     background-size: cover;
     position: relative;
     min-height: 500px;
