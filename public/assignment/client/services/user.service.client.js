@@ -5,113 +5,58 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService($rootScope) {
-        var model = {
-            users: [
-                {
-                    "_id": 123, "firstName": "Alice", "lastName": "Wonderland",
-                    "username": "alice", "password": "alice", "roles": ["student"]
-                },
-                {
-                    "_id": 234, "firstName": "Bob", "lastName": "Hope",
-                    "username": "bob", "password": "bob", "roles": ["admin"]
-                },
-                {
-                    "_id": 345, "firstName": "Charlie", "lastName": "Brown",
-                    "username": "charlie", "password": "charlie", "roles": ["faculty"]
-                },
-                {
-                    "_id": 456, "firstName": "Dan", "lastName": "Craig",
-                    "username": "dan", "password": "dan", "roles": ["faculty", "admin"]
-                },
-                {
-                    "_id": 567, "firstName": "Edward", "lastName": "Norton",
-                    "username": "ed", "password": "ed", "roles": ["student"]
-                }
-            ],
+    function UserService($http, $rootScope) {
+
+        var service = {
+
             setCurrentUser: setCurrentUser,
             getCurrentUser: getCurrentUser,
-            findUserByUsername: findUserByUsername,
             findUserByCredentials: findUserByCredentials,
+            findUserByUsername: findUserByUsername,
             findAllUsers: findAllUsers,
+            findUserById: findUserById,
+            deleteUser: deleteUser,
             createUser: createUser,
-            deleteUserById: deleteUserById,
-            updateUser: updateUser,
-            findUserById: findUserById
-        };
-        return model;
+            updateUser: updateUser
 
-        function setCurrentUser(user) {
+        };
+
+        return service;
+
+        function setCurrentUser(user){
             $rootScope.currentUser = user;
         }
 
-        function getCurrentUser() {
+        function getCurrentUser(){
             return $rootScope.currentUser;
         }
 
-        function findAllUsers(callback) {
-            return callback(model.users);
-        }
-
-        function createUser(user, callback) {
-            var user = {
-                _id: (new Date).getTime(),
-                username: user.username,
-                password: user.password,
-                email: user.email
-            };
-            model.users.push(user);
-            callback(user);
+        function findUserByCredentials(username, password) {
+            return $http.get("/api/assignment/user?username=" + username + "&password=" + password);
         }
 
         function findUserByUsername(username) {
-            for (var u in model.users) {
-                if (model.users[u].username === username) {
-                    return model.users[u];
-                }
-            }
-            return null;
+            return $http.get("/api/assignment/user?username=" + username)
         }
 
-        function findUserByCredentials(username, password, callback) {
-            for (var u in model.users) {
-                if (model.users[u].username === username &&
-                    model.users[u].password === password) {
-                    callback(model.users[u]);
-                }
-            }
-            callback(null);
+        function findAllUsers() {
+            return $http.get("/api/assignment/user/");
         }
 
-        function findUserById(id) {
-            for (var u in model.users) {
-                if (model.users[u]._id === id) {
-                    return model.users[u];
-                }
-            }
-            return null;
+        function findUserById(userId) {
+            return $http.get("/api/assignment/user/" + userId + "/");
         }
 
-        function updateUser(userId, updates, callback) {
-            var user = model.findUserById(userId);
-            if (user != null) {
-                user.firstName = updates.firstName;
-                user.lastName = updates.lastName;
-                user.password = updates.password;
-                callback(user);
-            } else {
-                callback(null);
-            }
+        function createUser(user) {
+            return $http.post("/api/assignment/user/", user);
         }
 
-        function deleteUserById(userId, callback) {
-            var user = model.findUserById(userId);
-            if (user != null) {
-                var userIndex = model.users.indexOf(user);
-                model.users.splice(userIndex, 1);
-                callback(model.users);
-            }
-            callback(null);
+        function deleteUser(userId) {
+            return $http.delete("/api/assignment/user/" + userId + "/");
+        }
+
+        function updateUser(userId, user) {
+            return $http.put("/api/assignment/user/" + userId + "/", user);
         }
     }
 })();
