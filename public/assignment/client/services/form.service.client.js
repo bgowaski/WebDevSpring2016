@@ -1,3 +1,6 @@
+/**
+ * Created by bgowaski on 3/17/16.
+ */
 (function(){
     'use strict';
 
@@ -14,7 +17,6 @@
             updateForm: updateForm,
             deleteForm: deleteForm
         };
-
         return service;
 
         function createForm(userId, form){
@@ -36,8 +38,5 @@
         function deleteForm(formId){
             return $http.delete("/api/assignment/form/" + formId);
         }
-
-
     }
-
 })();

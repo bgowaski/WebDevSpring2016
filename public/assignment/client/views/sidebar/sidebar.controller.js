@@ -3,6 +3,7 @@
         .module("FormBuilderApp")
         .controller("SidebarController", SidebarController);
 
-    function SidebarController() {
+    function SidebarController(){
+        var vm = this;
     }
 })();

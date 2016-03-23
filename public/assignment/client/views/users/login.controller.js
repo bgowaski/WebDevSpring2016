@@ -1,23 +1,27 @@
-(function () {
+(function(){
     angular
         .module("FormBuilderApp")
         .controller("LoginController", LoginController);
 
-    function LoginController($scope, $rootScope, UserService) {
-        $scope.login = login;
+    function LoginController($rootScope, $location, UserService){
+        var vm = this;
+        vm.login = login;
 
-        function login(user) {
-            UserService.findUserByCredentials(user.username, user.password, callback);
+        vm.errorMessage = null;
 
-            function callback(user) {
-                if (user) {
-                    $rootScope.currentUser = user;
-                    UserService.setCurrentUser(user);
-                    $rootScope.$location.url("/profile");
-                } else {
-                    $scope.error = "Login failed: invalid credentials."
-                }
-            }
+        function login(user){
+            UserService
+                .findUserByCredentials(user.username, user.password)
+                .then(function(response){
+                    if (response.data){
+                        $rootScope.currentUser = response.data;
+                        $location.url("/profile");
+                    }
+                    else {
+                        vm.errorMessage = "Incorrect Login";
+                    }
+                });
         }
     }
+
 })();

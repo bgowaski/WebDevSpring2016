@@ -1,47 +1,67 @@
-(function () {
-    'use strict';
+/**
+ * Created by bgowaski on 3/17/16.
+ */
+(function(){
+    "use strict";
+    angular
+        .module("FormBuilderApp")
+        .controller("FormController", FormController);
 
-    angular.module("FormBuilderApp")
-        .controller("FormsController", FormsController);
+    function FormController($scope, $rootScope, formService){
+        var vm = this;
+        vm.form = null;
 
-    function FormsController($rootScope, $scope, FormService) {
-        $scope.forms = FormService.forms;
+        vm.addForm = addForm;
+        vm.updateForm = updateForm;
+        vm.selectForm = selectForm;
+        vm.deleteForm = deleteForm;
 
-        $scope.addForm = addForm;
-        $scope.updateForm = updateForm;
-        $scope.deleteForm = deleteForm;
-        $scope.selectForm = selectForm;
+        function init() {
+            formService
+                .findAllForms($rootScope.currentUser._id)
+                .then(function (response) {
+                    vm.availableForms = response.data;
+                });
+        }
+        init();
 
-        function addForm() {
-            FormService.createFormForUser($rootScope.currentUser._id, {title: $scope.formTitle}, callback);
-
-            function callback(form) {
-                $scope.formTitle = null;
-            }
+        function addForm(){
+            formService
+                .createForm($rootScope.currentUser._id, vm.form)
+                .then(function(response){
+                    vm.availableForms.push(response.data);
+                    vm.form = null;
+                });
         }
 
-        function updateForm() {
-            $scope.selectedForm.title = $scope.formTitle;
-            FormService.updateFormById($scope.selectedForm._id, $scope.selectedForm, callback);
-
-            function callback(form) {
-                $scope.selectedForm = null;
-                $scope.formTitle = null;
-            }
+        function updateForm(){
+            formService
+                .updateForm(vm.availableForms[vm.selectedFormIndex]._id, vm.form)
+                .then(function(response){
+                    vm.availableForms[vm.selectedFormIndex] = response.data;
+                    vm.form = null;
+                });
         }
 
-        function deleteForm(index) {
-            FormService.deleteFormById(FormService.forms[index]._id, callback);
-
-            function callback() {
-                $scope.selectedForm = null;
-                $scope.formTitle = null;
-            }
+        function selectForm(index){
+            vm.selectedFormIndex = index;
+            vm.form = {
+                _id: vm.availableForms[index]._id,
+                title: vm.availableForms[index].title,
+                userId: vm.availableForms[index].userId
+            };
         }
 
-        function selectForm(index) {
-            $scope.selectedForm = $.extend(true, {}, FormService.forms[index]);
-            $scope.formTitle = $scope.selectedForm.title;
+        function deleteForm(index){
+            formService
+                .deleteForm(vm.availableForms[index]._id)
+                .then(function(response){
+                    vm.availableForms.splice(index, 1);
+                    vm.form = null;
+                });
+
         }
+
     }
+
 })();

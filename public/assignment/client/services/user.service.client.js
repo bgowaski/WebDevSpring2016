@@ -1,3 +1,6 @@
+/**
+ * Created by bgowaski on 3/17/16.
+ */
 (function () {
     'use strict';
 
@@ -20,7 +23,6 @@
             updateUser: updateUser
 
         };
-
         return service;
 
         function setCurrentUser(user){

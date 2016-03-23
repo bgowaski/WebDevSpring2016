@@ -1,3 +1,6 @@
+/**
+ * Created by bgowaski on 3/17/16.
+ */
 (function() {
     "use strict";
     angular
@@ -14,7 +17,6 @@
             updateField: updateField,
             updateAllFields: updateAllFields
         };
-
         return service;
 
         function createFieldForForm(formId, field) {

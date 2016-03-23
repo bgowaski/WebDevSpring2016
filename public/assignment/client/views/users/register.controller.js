@@ -1,27 +1,37 @@
-(function () {
-    'use strict';
-
-    angular.module("FormBuilderApp")
+(function(){
+    angular
+        .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($rootScope, $scope, UserService) {
-        $scope.register = register;
+    function RegisterController($location, UserService){
+        var vm = this;
+        vm.errorMessage = null;
 
-        function register() {
-            if ($scope.user.password !== $scope.user.verifyPassword) {
-                $scope.passwordVerification = "Your passwords do not match";
+        vm.register = register;
 
+        function register(user){
+
+            if(!user.username){
+                vm.errorMessage = "Please Enter Username";
+                return;
             }
-            else {
-                $scope.passwordVerification = null;
-
-                UserService.createUser($scope.user, callback);
-
-                function callback(user) {
-                    $rootScope.currentUser = user;
-                    $rootScope.$location.url('/profile');
-                }
+            if(!user.password || !user.password2){
+                vm.errorMessage = "Please Enter Password";
+                return;
             }
+            if(user.password !== user.password2){
+                vm.errorMessage = "Passwords Don't Match";
+                return;
+            }
+
+            UserService
+                .createUser(user)
+                .then(function(response){
+                    UserService.setCurrentUser(response.data);
+                    $location.url("/profile");
+                });
+
         }
     }
+
 })();

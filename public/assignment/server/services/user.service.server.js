@@ -2,18 +2,23 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, userModel) {
-    app.post("/api/assignments/user", createUser);
-    app.get("/api/assignments/user", findAllUsers);
-    app.get("/api/assignments/user/:id", findUserById);
-    app.post("/api/assignments/username", findUserByUsername);
-    app.post("/api/assignments/creds", findUserByCredentials);
-    app.put("/api/assignments/user/:id", updateUser);
-    app.delete("/api/assignments/user/:id", deleteUser);
+    app.post("/api/assignment/user", createUser);
+    app.get("/api/assignment/user", findAllUsers);
+    app.get("/api/assignment/user/:id", findUserById);
+    app.post("/api/assignment/username", findUserByUsername);
+    app.post("/api/assignment/creds", findUserByCredentials);
+    app.put("/api/assignment/user/:id", updateUser);
+    app.delete("/api/assignment/user/:id", deleteUser);
 
     function createUser(req, res) {
         var user = req.body;
         user = userModel.createUser(user);
         res.json(user);
+    }
+
+    function findAllUsers(req, res) {
+        var users = userModel.findAllUsers();
+        res.json(users);
     }
 
     function findUserByUsername(req, res){
@@ -26,11 +31,6 @@ module.exports = function(app, userModel) {
         var credentials = req.body;
         var user = userModel.findUserByCredentials(credentials);
         res.json(user);
-    }
-
-    function findAllUsers(req, res) {
-        var users = userModel.findAllUsers();
-        res.json(users);
     }
 
     function findUserById(req, res) {
