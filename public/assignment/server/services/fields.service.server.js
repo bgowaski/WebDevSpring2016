@@ -2,19 +2,19 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, formModel) {
-    app.get("/api/assignments/form/:formId/field", findFields);
-    app.get("/api/assignments/form/:formId/field/:fieldId", findFieldById);
+    app.get("/api/assignments/form/:formId/field", getFieldsForForm);
+    app.get("/api/assignments/form/:formId/field/:fieldId", getFieldById);
     app.post("/api/assignments/form/:formId/field", createField);
     app.put("/api/assignments/form/:formId/field/:fieldId", updateField);
     app.delete("/api/assignments/form/:formId/field/:fieldId", deleteField);
 
-    function findFields(req, res) {
+    function getFieldsForForm(req, res) {
         var formId = req.params.formId;
         var fields = formModel.findFormFields(formId);
         res.json(fields);
     }
 
-    function findFieldById(req, res) {
+    function getFieldById(req, res) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = formModel.findFormFieldById(formId, fieldId);
