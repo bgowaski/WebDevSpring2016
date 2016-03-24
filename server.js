@@ -35,4 +35,6 @@ app.get('/', function(req, res){
 
 require('./public/assignment/server/app.js')(app);
 
-app.listen(port, ipaddress);
+app.listen(port, ipaddress, function(){
+    console.log('listening on: ' + ipaddress + ':' + port);
+});

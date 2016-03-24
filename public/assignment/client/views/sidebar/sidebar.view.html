@@ -9,13 +9,13 @@
         <a href="#/profile">Profile</a>
     </li>
 
-    <li ng-show="currentUser && currentUser.roles.indexOf('admin') > -1"
-        ng-class="{'active' : $location.url().indexOf('admin') > -1}">
+    <li ng-show="currentUser.roles.indexOf('admin') > -1"
+        ng-class="{'active' : $location.url() == /'admin'}">
         <a href="#/admin">Admin</a>
     </li>
 
-    <li ng-show="currentUser.roles.indexOf('admin') > -1"
-        ng-class="{'active' : $location.url().indexOf('forms') > -1 || $location.url().indexOf('fields') > -1}">
-        <a href="#/forms">Forms</a>
+    <<li ng-show="currentUser"
+         ng-class="{'active' : $location.path() == '/forms' ||  $location.path() == '/fields'}">
+         <a href="#/forms">Forms</a>
     </li>
 </ul>
