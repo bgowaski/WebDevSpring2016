@@ -15,6 +15,8 @@ module.exports = function() {
         createField: createField,
         updateField: updateField,
         deleteField: deleteField,
+        moveFormField: moveFormField,
+        addNewField: addNewField
     };
     return api;
 
@@ -139,6 +141,81 @@ module.exports = function() {
                     }
                 }
             }
+        }
+    }
+
+
+    function moveFormField(formId, fieldId, direction){
+        for(var x in forms){
+            if(forms[x]._id == formId){
+                for(var y in forms[x].fields){
+                    if(forms[x].fields[y]._id == fieldId){
+                        if (direction.direction == "UP"){
+                            var newIndex = parseInt(y) - 1;
+                        }
+                        else {
+                            var newIndex = parseInt(y) + 1;
+                        }
+                        if (newIndex >= forms[x].fields.length || newIndex < 0) {
+                            return null;
+                        }
+                        forms[x].fields.splice(newIndex, 0, forms[x].fields.splice(y, 1)[0]);
+                        return forms[x].fields;
+
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    function addNewField(field){
+        if (field.type == "Single Line Text Field") {
+            field.type = "TEXT";
+            field.label = "New Text Field";
+            field.placeholder = "New Field";
+            return field;
+        }
+        else if (field.type == "Multi Line Text Field") {
+            field.type = "TEXTAREA";
+            field.label = "New Text Field";
+            field.placeholder = "New Field";
+            return field;
+        }
+        else if (field.type == "Date Field"){
+            field.type = "DATE";
+            field.label = "New Date Field";
+            return field;
+        }
+        else if (field.type == "Dropdown Field"){
+            field.type = "OPTIONS";
+            field.label = "New Dropdown";
+            field.options = [
+                {"label": "Option 1", "value": "OPTION_1"},
+                {"label": "Option 2", "value": "OPTION_2"},
+                {"label": "Option 3", "value": "OPTION_3"}
+            ];
+            return field;
+        }
+        else if (field.type == "Checkboxes Field"){
+            field.type = "CHECKBOXES";
+            field.label = "New Checkboxes";
+            field.options = [
+                {"label": "Option A", "value": "OPTION_A"},
+                {"label": "Option B", "value": "OPTION_B"},
+                {"label": "Option C", "value": "OPTION_C"}
+            ];
+            return field;
+        }
+        else if (field.type == "Radio Buttons Field"){
+            field.type = "RADIOS";
+            field.label = "New Radio Buttons";
+            field.options = [
+                {"label": "Option X", "value": "OPTION_X"},
+                {"label": "Option Y", "value": "OPTION_Y"},
+                {"label": "Option Z", "value": "OPTION_Z"}
+            ];
+            return field;
         }
     }
 };
