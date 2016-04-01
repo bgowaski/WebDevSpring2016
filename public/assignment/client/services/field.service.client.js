@@ -14,6 +14,7 @@
             getFieldsForForm: getFieldsForForm,
             getFieldForForm: getFieldForForm,
             deleteFieldFromForm: deleteFieldFromForm,
+            moveField: moveField,
             updateField: updateField,
             updateAllFields: updateAllFields
         };
@@ -33,6 +34,10 @@
 
         function deleteFieldFromForm(formId, fieldId) {
             return $http.delete("/api/assignment/form/" + formId + "/field/" + fieldId);
+        }
+
+        function moveField(formId, fieldId, direction){
+            return $http.post("/api/assignment/form/" + formId + "/field/" + fieldId + "/move", direction);
         }
 
         function updateField(formId, fieldId, field) {

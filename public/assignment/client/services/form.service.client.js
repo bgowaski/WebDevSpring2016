@@ -6,7 +6,7 @@
 
     angular
         .module("FormBuilderApp")
-        .factory("FormService", FormService);
+        .factory("FormsService", FormService);
 
     function FormService($http){
 

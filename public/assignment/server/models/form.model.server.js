@@ -100,7 +100,7 @@ module.exports = function() {
         for (var x in forms) {
             if (forms[x]._id == formId) {
                 field._id = (new Date()).getTime();
-                field = buildNewField(field);
+                field = addNewField(field);
                 forms[x].fields.push(field);
                 return field;
             }
@@ -170,6 +170,7 @@ module.exports = function() {
     }
 
     function addNewField(field){
+        console.log("Reached Here");
         if (field.type == "Single Line Text Field") {
             field.type = "TEXT";
             field.label = "New Text Field";

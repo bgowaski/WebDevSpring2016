@@ -5,17 +5,18 @@
     "use strict";
     angular
         .module("FormBuilderApp")
-        .controller("FormController", FormController);
-
+        .controller("FormsController", FormController);
+    FormController.$inject=["$scope","$rootScope","FormsService"];
     function FormController($scope, $rootScope, formService){
         var vm = this;
-        vm.form = null;
+        vm.form = {};
 
         vm.addForm = addForm;
         vm.updateForm = updateForm;
         vm.selectForm = selectForm;
         vm.deleteForm = deleteForm;
 
+        console.log($rootScope.currentUser);
         function init() {
             formService
                 .findAllForms($rootScope.currentUser._id)

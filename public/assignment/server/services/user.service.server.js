@@ -17,8 +17,14 @@ module.exports = function(app, userModel) {
     }
 
     function findAllUsers(req, res) {
-        var users = userModel.findAllUsers();
-        res.json(users);
+        userModel
+            .findAllUsers()
+            .then(function(users){
+                res.send(users);
+            })
+            .catch(function(err) {
+                res.status(500).send();
+            });
     }
 
     function findUserByUsername(req, res){

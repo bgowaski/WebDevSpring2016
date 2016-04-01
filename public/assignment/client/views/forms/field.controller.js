@@ -6,7 +6,7 @@
     angular
         .module("FormBuilderApp")
         .controller("FieldController", FieldController);
-
+FieldController.$inject=["$routeParams","FieldService","FormsService"];
     function FieldController($routeParams,
                              fieldService,
                              formService) {
@@ -29,7 +29,7 @@
         vm.editField = editField;
         vm.moveFieldUp = moveFieldUp;
         vm.moveFieldDown = moveFieldDown;
-        vm.updateFieldType = updateFieldType;
+        vm.updateField = updateFieldType;
         vm.removeField = removeField;
         vm.closePopup = closePopup;
         vm.applyChanges = applyChanges;
@@ -44,36 +44,12 @@
         init();
 
         function addField(fieldType){
+            console.log(fieldType);
             fieldService
                 .createFieldForForm(vm.formId, {type: fieldType})
                 .then(function(response){
-                    if (fieldType === "TEXT" || fieldType === "TEXTAREA") {
-                        field.label = "New Text Field";
-                        field.placeholder = "New Field";
-                    } else if (fieldType === "DATE") {
-                        field.label = "New Date Field";
-                        field.placeholder = "MM/DD/YYYY";
-                    } else if (fieldType === "OPTIONS") {
-                        field.label = "New Dropdown";
-                        field.options = [
-                            {label: "Option 1", value: "OPTION_1"},
-                            {label: "Option 2", value: "OPTION_2"},
-                            {label: "Option 3", value: "OPTION_3"}
-                        ];
-                    } else if (fieldType === "CHECKBOXES") {
-                        field.label = "New Checkboxes";
-                        field.options = [
-                            {label: "Option A", value: "OPTION_A"},
-                            {label: "Option B", value: "OPTION_B"},
-                            {label: "Option C", value: "OPTION_C"}
-                        ];
-                    } else if (fieldType === "RADIOS") {
-                        field.label = "New Radio Buttons";
-                        field.options = [
-                            {label: "Option X", value: "OPTION_X"},
-                            {label: "Option Y", value: "OPTION_Y"},
-                            {label: "Option Z", value: "OPTION_Z"}
-                        ];
+                    if (response.data){
+                        vm.form.fields.push(response.data);
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -83,7 +59,7 @@
 
         function editField(fieldId){
             fieldService
-                .getFieldForForm(vm.formId, fieldId)
+                .getFieldsForForm(vm.formId, fieldId)
                 .then(function(response){
                     if(response.data){
                         vm.selectedField = response.data;

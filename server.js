@@ -34,6 +34,8 @@ app.get('/', function(req, res){
 });
 
 require('./public/assignment/server/app.js')(app);
+//require('./public/experiments/server/app.js')(app);
+require('./public/YoProLiving/server/app.js')(app);
 
 app.listen(port, ipaddress, function(){
     console.log('listening on: ' + ipaddress + ':' + port);

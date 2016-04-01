@@ -1,0 +1,76 @@
+
+/* TO ADD OR REMOVE PADDING / MARGINS */
+.pad-top {
+    padding-top: 10px;
+}
+
+.remove-spacing {
+    padding: 0;
+    margin: 0;
+}
+
+/* FOR GLYPHICONS */
+.glyphicon-lg {
+    font-size: 1.5em;
+}
+
+.icons-right {
+    text-align: right;
+}
+
+.glyph-btn:hover {
+    color: #2f5eff;
+    cursor: pointer;
+}
+
+/* FOR ALIGNMENT */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .vertical-align {
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* IF we want vertical align no matter what the screen size is */
+.vertical-align-xs {
+    display: flex;
+    align-items: center;
+}
+
+a {
+    cursor: pointer;
+}
+
+.field{
+    font-size: 20px;
+}
+
+.field-popup{
+    border: 2px solid black;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 5;
+}
+
+.field-popup-header {
+    border-bottom: 1px solid black;
+    text-align: center;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.popup-exit{
+    float: left;
+    margin-left: 3px;
+}
+
+.popup-buttons {
+    margin-bottom: 10px;
+}
+
+.field-popup-content {
+    margin-left: 15px;
+}

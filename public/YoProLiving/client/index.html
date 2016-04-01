@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="YoProLivingApp">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="YoPro Living">
+    <meta name="author" content="Ben Gowaski">
+    <title>YoPro Living</title>
+
+    <!-- CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
+    <link href="./css/styles.css" rel="stylesheet">
+    <link href="./css/shop-homepage.css" rel="stylesheet">
+
+    <!-- External Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
+
+    <script src="app.js"></script>
+    <script src="config.js"></script>
+
+    <!-- Services -->
+    <script src="services/field.service.client.js"></script>
+    <script src="services/form.service.client.js"></script>
+    <script src="services/user.service.client.js"></script>
+
+    <!-- View controllers -->
+    <script src="views/main/main.controller.js"></script>
+    <script src="views/admin/admin.controller.js"></script>
+    <script src="views/forms/forms.controller.js"></script>
+    <script src="views/forms/field.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
+    <script src="views/home/home.controller.js"></script>
+    <script src="views/users/login.controller.js"></script>
+    <script src="views/users/profile.controller.js"></script>
+    <script src="views/users/register.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
+
+</head>
+
+
+<body ng-controller="MainController">
+
+<div ng-include="'./views/header/header.view.html'"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <div ng-include="'./views/sidebar/sidebar.view.html'"></div>
+        </div>
+        <div class="col-sm-9 col-md-10 col-sm-offset-3">
+            <div ng-view> </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

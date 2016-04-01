@@ -7,7 +7,7 @@
                 <li role="presentation" class="active"><a
                         href="#/forms">Forms</a></li>
                 <li ng-show="model.form" role="presentation"><a
-                        href="#/form/{{model.form._id}}/fields">Fields</a></li>
+                        href="#/form/{{model.form['_id']}}/fields">Fields</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade in active" id="forms" aria-labelledby="forms-tab">
@@ -40,7 +40,7 @@
                             </tr>
 
                         <tr ng-repeat="form in model.availableForms">
-                            <td><a href="#/form/{{form._id}}/fields">{{form.title}}</a></td>
+                            <td><a href="#/form/{{form['_id']}}/fields">{{form.title}}</a></td>
                                 <td>
                                     <div class="btn-group">
                                         <button ng-click="model.deleteForm($index)" type="button" class="btn btn-default">
