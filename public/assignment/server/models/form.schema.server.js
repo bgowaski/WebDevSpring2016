@@ -2,18 +2,18 @@
  * Created by bgowaski on 3/31/16.
  */
 module.exports = function(mongoose){
-    "use strict";
 
-    var fieldSchema = mongoose.Schema({
+    var Field = require('./field.schema.server')(mongoose);
+
+    var formSchema = mongoose.Schema({
 
         userId: String,
-        title: String,
-        fields: [fieldSchema],
-        created: Date,
-        updated: Date
+        title: {type: String, default: 'New Form'},
+        fields: [Field],
+        created: {type: Date, default: Date.now},
+        updated: {type: Date, default: Date.now}
+    }, {collection: 'assignment.form'});
 
-    }, {collection: 'assignment.field'});
-
-    return fieldSchema
+    return formSchema
 
 };

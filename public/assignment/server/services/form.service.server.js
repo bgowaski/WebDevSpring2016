@@ -3,7 +3,6 @@
  */
 module.exports = function(app, formModel) {
     app.get("/api/assignment/form/:id", findFormById);
-    app.post("/api/assignment/title", findFormByTitle);
     app.get("/api/assignment/forms/:userId", findAllForms);
     app.post("/api/assignment/user/:userId/form", createForm);
     app.put("/api/assignment/form/:id", updateForm);
@@ -11,38 +10,76 @@ module.exports = function(app, formModel) {
 
     function findFormById(req, res) {
         var formId = req.params.id;
-        var form = formModel.findFormById(formId);
-        res.json(form);
-    }
-
-    function findFormByTitle(req, res){
-        var data = req.body;
-        var form = formModel.findFormByTitle(data.title);
-        res.json(form);
+        formModel.findFormById(formId)
+            .then(
+                function (result) {
+                    res.json(result);
+                },
+                function (error) {
+                    res.status(400).send(error);
+                }
+            );
     }
 
     function findAllForms(req, res) {
         var userId = req.params.userId;
-        var forms = formModel.findAllForms(userId);
-        res.json(forms);
+        formModel.findAllForms(userId)
+            .then(
+                function (result) {
+                    res.json(result);
+                },
+                function (error) {
+                    res.status(400).send(error);
+                }
+            );
     }
 
     function createForm(req, res) {
         var form = req.body;
-        form = formModel.createForm(form);
-        res.json(form);
+
+        formModel.createForm(form)
+            .then(
+                function (result) {
+                    res.json(result);
+                },
+                function (error) {
+                    res.status(400).send(error);
+                }
+            );
     }
 
     function updateForm(req, res) {
         var form = req.body;
         var formId = req.params.id;
-        form = formModel.updateForm(formId, form);
-        res.send(form);
+        formModel.updateForm(formId, form)
+            .then(
+                function (result) {
+                    formModel.findFormById(formId)
+                        .then(
+                            function (result) {
+                                res.json(result);
+                            },
+                            function (error) {
+                                res.status(400).send(error);
+                            }
+                        );
+                },
+                function (error) {
+                    res.status(400).send(error);
+                }
+            );
     }
 
     function deleteForm(req, res) {
         var formId = req.params.id;
-        formModel.deleteForm(formId);
-        res.send(400);
+        formModel.deleteForm(formId)
+            .then(
+                function (result) {
+                    res.json(result);
+                },
+                function (error) {
+                    res.status(400).send(error);
+                }
+            );
     }
 };

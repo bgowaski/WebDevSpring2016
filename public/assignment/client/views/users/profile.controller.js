@@ -8,14 +8,21 @@
         vm.message = null;
         vm.errorMessage = null;
 
-        vm.currentUser = UserService.getCurrentUser();
-
-        var preservedUserInfo = preserveInfo(vm.currentUser);
+        vm.currentUser = {};
+        var preservedUserInfo = {};
 
         function init() {
-            if (!vm.currentUser) {
-                $location.url("/home");
-            }
+            UserService
+                .getCurrentUser()
+                .then(function(response){
+                    if (response.data) {
+                        vm.currentUser = response.data;
+                        preservedUserInfo = preserveInfo(vm.currentUser);
+                    }
+                    else {
+                        $location.url("/home");
+                    }
+                });
         }
         init();
 

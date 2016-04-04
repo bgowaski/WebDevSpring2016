@@ -13,7 +13,7 @@ module.exports = function(mongoose){
         phones: [String],
         roles: [{
             type: String,
-            enum: ["user","adsdmin"]
+            enum: ["user","admin"]
         }]
 
     }, {collection: 'assignment.user'});

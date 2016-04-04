@@ -1,7 +1,7 @@
 /**
  * Created by bgowaski on 3/17/16.
  */
-module.exports = function(mongoose) {
+module.exports = function(db,mongoose) {
     var userSchema = require('./user.schema.server.js')(mongoose);
     var q = require('q');
 

@@ -5,7 +5,34 @@
     "use strict";
     angular
         .module("FormBuilderApp")
+        .directive("fieldSortable", fieldSortable)
         .controller("FieldController", FieldController);
+
+    function fieldSortable(){
+        var start = null;
+        var end = null;
+        function link(scope, element) {
+            $(element).sortable({
+                axis: "y",
+                start: function(event, ui) {
+                    start = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    end = ui.item.index();
+                    var temp = scope.fields[start];
+                    scope.fields[start] = scope.fields[end];
+                    scope.fields[end] = temp;
+                    scope.applySort();
+                },
+                handle: ".dragMe"
+            });
+        }
+        return {
+            restrict: "EA",
+            link: link
+        }
+    }
+
 FieldController.$inject=["$routeParams","FieldService","FormsService"];
     function FieldController($routeParams,
                              fieldService,
@@ -33,6 +60,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
         vm.removeField = removeField;
         vm.closePopup = closePopup;
         vm.applyChanges = applyChanges;
+        vm.applySort = applySort;
 
         function init(){
             formService
@@ -142,6 +170,20 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                     }
                 });
         }
+
+        function applySort(){
+            fieldService
+                .reorderFields(vm.formId, $scope.fields)
+                .then(function(response){
+                    if(response.data){
+                        vm.form.fields = response.data;
+                    }
+                    else {
+                        console.log("INCORRECT RESPONSE!");
+                    }
+                })
+        }
+
         function applyChanges(field){
             if (field.optionsPretty){
                 var newOptions = [];
