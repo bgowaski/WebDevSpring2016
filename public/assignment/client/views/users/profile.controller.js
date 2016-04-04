@@ -14,15 +14,24 @@
         function init() {
             UserService
                 .getCurrentUser()
-                .then(function(response){
-                    if (response.data) {
-                        vm.currentUser = response.data;
-                        preservedUserInfo = preserveInfo(vm.currentUser);
-                    }
-                    else {
-                        $location.url("/home");
-                    }
-                });
+                //.then(function(response){
+                //    if (response.data) {
+                //        vm.currentUser = response.data;
+                //        preservedUserInfo = preserveInfo(vm.currentUser);
+                //    }
+                //    else {
+                //        $location.url("/home");
+                //    }
+                //});
+
+            //Test Code
+
+            var user = UserService.getCurrentUser();
+            console.log(user);
+
+            vm.currentUser = user;
+            preservedUserInfo = preserveInfo(vm.currentUser);
+
         }
         init();
 

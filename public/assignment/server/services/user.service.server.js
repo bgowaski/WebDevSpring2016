@@ -2,7 +2,7 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, userModel) {
-    app.post("/api/assignment/user", createUser);
+    app.post("/api/assignment/user1/", createUser);
     app.get("/api/assignment/user", findAllUsers);
     app.get("/api/assignment/user/:id", findUserById);
     app.post("/api/assignment/creds", findUserByCredentials);
@@ -25,6 +25,8 @@ module.exports = function(app, userModel) {
         var user = req.body;
         userModel.createUser(user)
             .then(function(result){
+                    console.log("I Then");
+                    console.log(result);
                     req.session.currentUser = result;
                     res.json(result);
                 },

@@ -72,12 +72,17 @@ module.exports = function(app, fieldModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var field = req.body;
+        console.log("Form ID : " + formId);
+        console.log("Field ID : " + fieldId);
+        console.log(field);
         fieldModel.updateField(formId, fieldId, field)
             .then(
                 function (result){
                     fieldModel.findFieldById(formId, fieldId)
                         .then(
                             function (result) {
+                                console.log("Result on success");
+                                console.log(result);
                                 res.json(result);
                             },
                             function (error) {

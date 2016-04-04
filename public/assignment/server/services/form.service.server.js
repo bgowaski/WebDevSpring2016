@@ -36,7 +36,8 @@ module.exports = function(app, formModel) {
 
     function createForm(req, res) {
         var form = req.body;
-
+        console.log("Create New Form");
+        console.log(req.body);
         formModel.createForm(form)
             .then(
                 function (result) {

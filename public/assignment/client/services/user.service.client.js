@@ -50,7 +50,7 @@
         }
 
         function createUser(user) {
-            return $http.post("/api/assignment/user/", user);
+            return $http.post("/api/assignment/user1/", user);
         }
 
         function deleteUser(userId) {

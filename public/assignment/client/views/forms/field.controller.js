@@ -70,6 +70,14 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 });
         }
         init();
+        function initFields(formId, fieldId, field){
+            fieldService
+                .updateField(formId, fieldId, field)
+                .then(function(response){
+                    vm.form = response.data;
+                });
+        }
+        initFields();
 
         function addField(fieldType){
             console.log(fieldType);
@@ -78,6 +86,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 .then(function(response){
                     if (response.data){
                         vm.form.fields.push(response.data);
+                        init();
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -108,6 +117,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                                     vm.selectedField.options[x].value + "\n";
                             }
                         }
+                        initFields(vm.formId, selectedField._id, selectedField);
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -199,10 +209,15 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 }
                 field.options = newOptions;
             }
+            console.log(field[0]);
+            console.log("Field ID that is being sent : " + field[0]._id);
+            //console.log(vm.selectedField.label);
+            field[0].label = vm.selectedField.label;
             fieldService
-                .updateField(vm.formId, field._id, field)
+                .updateField(vm.formId, field[0]._id, field[0])
                 .then(function(response){
                     if(response.data){
+                        console.log(response.data);
                         for (var x in vm.form.fields) {
                             if (vm.form.fields[x]._id == response.data._id){
                                 vm.form.fields[x] = response.data;

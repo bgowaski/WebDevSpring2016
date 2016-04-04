@@ -88,7 +88,7 @@ module.exports = function(db,mongoose) {
 
     function updateField(formId, fieldId, field) {
         var deferred = q.defer();
-
+        console.log("Reached Model");
         FormModel.findById(formId, function (error, result) {
             if (error) {
                 deferred.reject(error);
@@ -104,7 +104,7 @@ module.exports = function(db,mongoose) {
                         formField.options = field.options || formField.options;
                     }
                 }
-                doc.save(function(error, result){
+                result.save(function(error, result){
                     if (error) {
                         deferred.reject(error);
                     } else {
