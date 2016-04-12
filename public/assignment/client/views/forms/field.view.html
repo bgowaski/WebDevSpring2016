@@ -63,10 +63,10 @@
             <div ng-repeat="field in model.form.fields" class="row vertical-align" ng-switch on="field.type[0]">
                 <div class="col-sm-8 col-xs-12 form-group" ng-switch-when="TEXT">
                     <label for="firstName">{{field.label}}</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="Field"/>
+                    <input type="text" class="form-control" id="firstName" placeholder="{{field.placeholder}}"/>
                 </div>
                 <div class="col-sm-8 col-xs-12 form-group" ng-switch-when="TEXTAREA">
-                    <label for="textArea">{{model.field.label}}</label>
+                    <label for="textArea">{{field.label}}</label>
                     <textarea  class="form-control" rows="3" id="textArea"></textarea>
                 </div>
                 <div class="col-sm-8 form-group" ng-switch-when="DATE">

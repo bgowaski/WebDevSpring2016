@@ -96,7 +96,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
 
         function editField(fieldId){
             fieldService
-                .getFieldsForForm(vm.formId, fieldId)
+                .getFieldForForm(vm.formId, fieldId)
                 .then(function(response){
                     if(response.data){
                         vm.selectedField = response.data;
@@ -117,7 +117,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                                     vm.selectedField.options[x].value + "\n";
                             }
                         }
-                        initFields(vm.formId, selectedField._id, selectedField);
+
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -209,12 +209,12 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 }
                 field.options = newOptions;
             }
-            console.log(field[0]);
-            console.log("Field ID that is being sent : " + field[0]._id);
+            console.log(field);
+            console.log("Field ID that is being sent : " + field._id);
             //console.log(vm.selectedField.label);
-            field[0].label = vm.selectedField.label;
+            field.label = vm.selectedField.label;
             fieldService
-                .updateField(vm.formId, field[0]._id, field[0])
+                .updateField(vm.formId, field._id, field)
                 .then(function(response){
                     if(response.data){
                         console.log(response.data);

@@ -1,7 +1,0 @@
-[
-  {"_id": 123, "firstName": "Alice", 	"lastName": "Wonderland",	"username": "alice", 	"password": "alice", "age": "21", "occupation": "consultant", "location":"Mission Hill, Boston MA"},
-  {"_id": 234, "firstName": "Bob",	"lastName": "Hope", 		"username": "bob", 	"password": "bob", "age": "25", "occupation": "Software Engineer", "location":"Somerville, Boston MA"},
-  {"_id": 345, "firstName": "Charlie","lastName": "Brown", 		"username": "charlie", "password": "charlie", "age": "20", "occupation": "Mechanical Engineer", "location":"Fenway, Boston MA"},
-  {"_id": 456, "firstName": "Dan",	"lastName": "Craig", 		"username": "dan", 	"password": "dan", "age": "23", "occupation": "Direct Operative", "location":"South End, Boston MA"},
-  {"_id": 567, "firstName": "Edward","lastName": "Norton",		"username": "ed",	"password": "ed", "age": "19", "occupation": "Magician", "location":"North End, Boston MA"}
-]

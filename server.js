@@ -40,10 +40,9 @@ app.use(function (req, res, next) {
 app.get('/', function(req, res){
     res.sendfile((__dirname + '/index.html'));
 });
-
-+require('./public/assignment/server/app.js')(app, db, mongoose);
+require('./public/assignment/server/app.js')(app, db, mongoose);
 //require('./public/experiments/server/app.js')(app);
-require('./public/YoProLiving/server/app.js')(app);
+require('./public/YoProLiving/server/app.js')(app, db, mongoose);
 
 app.listen(port, ipaddress, function(){
     console.log('listening on: ' + ipaddress + ':' + port);

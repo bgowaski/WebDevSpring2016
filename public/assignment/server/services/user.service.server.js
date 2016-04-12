@@ -2,14 +2,64 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, userModel) {
-    app.post("/api/assignment/user1/", createUser);
-    app.get("/api/assignment/user", findAllUsers);
+
+    var passport      = require('passport');
+    var auth = authorized;
+
     app.get("/api/assignment/user/:id", findUserById);
     app.post("/api/assignment/creds", findUserByCredentials);
-    app.put("/api/assignment/user/:id", updateUser);
-    app.delete("/api/assignment/user/:id", deleteUser);
-    app.post("/api/assignment/logout", logoutUser);
+
     app.get("/api/assignment/loggedin", loggedIn);
+    app.post  ("/api/assignment/login", passport.authenticate('local'), login);
+    app.post  ("/api/assignment/logout",         logoutUser);
+    app.post  ("/api/assignment/register",       register);
+    app.post  ("/api/assignment/user",     auth, createUser);
+    app.get   ("/api/assignment/loggedin",       loggedin);
+    app.get   ("/api/assignment/user",     auth, findAllUsers);
+    app.put   ("/api/assignment/user/:id", auth, updateUser);
+    app.delete("/api/assignment/user/:id", auth, deleteUser);
+
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        userModel
+            .findUserById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
+
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    }
+
+    function login(req, res) {
+        var user = req.user;
+        res.json(user);
+    }
+
+    function logout(req, res) {
+        req.logOut();
+        res.send(200);
+    }
+
+    function loggedin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
 
     function findAllUsers(req, res) {
         userModel
