@@ -11,16 +11,17 @@
 
         function login(user){
             UserService
-                .findUserByCredentials(user.username, user.password)
-                .then(function(response){
-                    if (response.data){
+                .loginUser(user)
+                .then(
+                    function(response)
+                    {
                         $rootScope.currentUser = response.data;
                         $location.url("/profile");
+                    },
+                    function(err) {
+                        vm.errorMessage = "Invalid Login";
                     }
-                    else {
-                        vm.errorMessage = "Incorrect Login";
-                    }
-                });
+                );
         }
     }
 

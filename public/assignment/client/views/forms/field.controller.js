@@ -33,34 +33,22 @@
         }
     }
 
-FieldController.$inject=["$routeParams","FieldService","FormsService"];
-    function FieldController($routeParams,
-                             fieldService,
-                             formService) {
+    function FieldController($scope, $routeParams, fieldService, formService) {
+
         var vm = this;
         vm.form = {};
         vm.formId = $routeParams.formId;
         vm.fieldType = "Single Line Text Field";
         vm.fieldEditor = false;
         vm.popupTitle = null;
-        vm.typeArray = [
-            "All",
-            "Single Line Text",
-            "Multi Line Text",
-            "Date",
-            "Dropdown",
-            "Checkboxes",
-            "Radio Buttons"];
-        vm.selection = vm.typeArray[0];
+
+        $scope.applySort = applySort;
         vm.addField = addField;
-        vm.editField = editField;
-        vm.moveFieldUp = moveFieldUp;
-        vm.moveFieldDown = moveFieldDown;
-        vm.updateField = updateFieldType;
         vm.removeField = removeField;
+        vm.editField = editField;
+        vm.updateFieldType = updateFieldType;
         vm.closePopup = closePopup;
         vm.applyChanges = applyChanges;
-        vm.applySort = applySort;
 
         function init(){
             formService
@@ -70,15 +58,6 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 });
         }
         init();
-        function initFields(formId, fieldId, field){
-            fieldService
-                .updateField(formId, fieldId, field)
-                .then(function(response){
-                    vm.form = response.data;
-                });
-        }
-        initFields();
-
         function addField(fieldType){
             console.log(fieldType);
             fieldService
@@ -93,7 +72,18 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                     }
                 });
         }
-
+        function applySort(){
+            fieldService
+                .reorderFields(vm.formId, $scope.fields)
+                .then(function(response){
+                    if(response.data){
+                        vm.form.fields = response.data;
+                    }
+                    else {
+                        console.log("INCORRECT RESPONSE!");
+                    }
+                })
+        }
         function editField(fieldId){
             fieldService
                 .getFieldForForm(vm.formId, fieldId)
@@ -103,11 +93,11 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                         vm.fieldEditor = true;
                         switch(vm.selectedField.type){
                             case "TEXT": vm.popupTitle = "Single Line Field"; break;
-                            case "TEXTAREA": vm.popupTitle = "Multi Line Field"; break;
+                            case "TEXTAREA": vm.popupTitle = "Multi Lines Field"; break;
                             case "DATE":  vm.popupTitle = "Date Field"; break;
                             case "OPTIONS":  vm.popupTitle = "Dropdown Field"; break;
-                            case "CHECKBOXES":  vm.popupTitle = "Checkbox Field"; break;
                             case "RADIOS":  vm.popupTitle = "Radio Button Field"; break;
+                            case "CHECKBOXES":  vm.popupTitle = "Checkbox Field"; break;
                         }
                         if (vm.selectedField.options) {
                             vm.selectedField.optionsPretty = "";
@@ -117,33 +107,6 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                                     vm.selectedField.options[x].value + "\n";
                             }
                         }
-
-                    }
-                    else {
-                        console.log("INCORRECT RESPONSE!");
-                    }
-                });
-        }
-
-        function moveFieldUp(fieldId){
-            fieldService
-                .moveField(vm.formId, fieldId, {direction: "UP"})
-                .then(function(response){
-                    if (response.data){
-                        vm.form.fields = response.data;
-                    }
-                    else {
-                        console.log("INCORRECT RESPONSE!");
-                    }
-                });
-        }
-
-        function moveFieldDown(fieldId){
-            fieldService
-                .moveField(vm.formId, fieldId, {direction: "DOWN"})
-                .then(function(response){
-                    if (response.data){
-                        vm.form.fields = response.data;
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -154,8 +117,6 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
         function updateFieldType(fieldType){
             vm.fieldType = fieldType;
         }
-
-
 
         function closePopup(){
             vm.fieldEditor = false;
@@ -181,19 +142,6 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 });
         }
 
-        function applySort(){
-            fieldService
-                .reorderFields(vm.formId, $scope.fields)
-                .then(function(response){
-                    if(response.data){
-                        vm.form.fields = response.data;
-                    }
-                    else {
-                        console.log("INCORRECT RESPONSE!");
-                    }
-                })
-        }
-
         function applyChanges(field){
             if (field.optionsPretty){
                 var newOptions = [];
@@ -209,24 +157,17 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 }
                 field.options = newOptions;
             }
-            console.log(field);
-            console.log("Field ID that is being sent : " + field._id);
-            //console.log(vm.selectedField.label);
-            field.label = vm.selectedField.label;
             fieldService
                 .updateField(vm.formId, field._id, field)
                 .then(function(response){
                     if(response.data){
-                        console.log(response.data);
                         for (var x in vm.form.fields) {
                             if (vm.form.fields[x]._id == response.data._id){
                                 vm.form.fields[x] = response.data;
                                 break;
                             }
                         }
-                        vm.fieldEditor = false;
-                        vm.selectedField = null;
-                        vm.popupTitle = null;
+                        closePopup()
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");

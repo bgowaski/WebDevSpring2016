@@ -20,7 +20,10 @@
             findUserById: findUserById,
             deleteUser: deleteUser,
             createUser: createUser,
-            updateUser: updateUser
+            registerUser: registerUser,
+            updateUserAdmin: updateUserAdmin,
+            updateUserProfile: updateUserProfile,
+            logout: logout
 
         };
         return service;
@@ -34,7 +37,7 @@
         }
 
         function findUserByCredentials(username, password) {
-            return $http.post("/api/YoProLiving/creds",{username:username, password:password});
+            return $http.post("/api/YoProLiving/login",{username:username, password:password});
         }
 
         function findUserByUsername(username) {
@@ -42,23 +45,35 @@
         }
 
         function findAllUsers() {
-            return $http.get("/api/YoProLiving/user/");
+            return $http.get("/api/YoProLiving/user");
         }
 
         function findUserById(userId) {
-            return $http.get("/api/YoProLiving/user/" + userId + "/");
+            return $http.get("/api/YoProLiving/user/" + userId);
         }
 
         function createUser(user) {
-            return $http.post("/api/YoProLiving/user/", user);
+            return $http.post("/api/YoProLiving/user", user);
+        }
+
+        function registerUser(user){
+            return $http.post("/api/YoProLiving/register", user);
         }
 
         function deleteUser(userId) {
-            return $http.delete("/api/YoProLiving/user/" + userId + "/");
+            return $http.delete("/api/YoProLiving/user/" + userId);
         }
 
-        function updateUser(userId, user) {
-            return $http.put("/api/YoProLiving/user/" + userId + "/", user);
+        function updateUserAdmin(userId, user){
+            return $http.put("/api/YoProLiving/user/" + userId, user);
+        }
+
+        function updateUserProfile(userId, user){
+            return $http.put("/api/YoProLiving/userprofile/" + userId, user);
+        }
+
+        function logout() {
+            return $http.post("/api/YoProLiving/logout");
         }
     }
 })();

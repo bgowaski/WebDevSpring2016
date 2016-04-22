@@ -1,6 +1,4 @@
-<div class="container-fluid">
-    <div class="row">
-
+<div class="col-sm-9  col-md-10">
     <h1 class="page-header">Forms:</h1>
 
     <div>
@@ -62,10 +60,10 @@
     </div>
     <div>
         <form class="pad-top" role="form">
-            <div ng-repeat="field in model.form.fields" class="row vertical-align" ng-switch on="field.type">
+            <div ng-repeat="field in model.form.fields" class="row vertical-align" ng-switch on="field.type[0]">
                 <div class="col-sm-8 col-xs-12 form-group" ng-switch-when="TEXT">
                     <label for="firstName">{{field.label}}</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="Field"/>
+                    <input type="text" class="form-control" id="firstName" placeholder="{{field.placeholder}}"/>
                 </div>
                 <div class="col-sm-8 col-xs-12 form-group" ng-switch-when="TEXTAREA">
                     <label for="textArea">{{field.label}}</label>
@@ -149,6 +147,5 @@
             </div>
         </form>
         <hr>
-        </div>
     </div>
 </div>

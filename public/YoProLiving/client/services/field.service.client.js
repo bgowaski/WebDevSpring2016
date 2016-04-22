@@ -14,9 +14,9 @@
             getFieldsForForm: getFieldsForForm,
             getFieldForForm: getFieldForForm,
             deleteFieldFromForm: deleteFieldFromForm,
-            moveField: moveField,
             updateField: updateField,
-            updateAllFields: updateAllFields
+            updateAllFields: updateAllFields,
+            reorderFields: reorderFields
         };
         return service;
 
@@ -37,9 +37,6 @@
             return $http.delete("/api/YoProLiving/form/" + formId + "/field/" + fieldId);
         }
 
-        function moveField(formId, fieldId, direction){
-            return $http.post("/api/YoProLiving/form/" + formId + "/field/" + fieldId + "/move", direction);
-        }
 
         function updateField(formId, fieldId, field) {
             return $http.put("/api/YoProLiving/form/" + formId + "/field/" + fieldId, field);
@@ -47,6 +44,10 @@
 
         function updateAllFields(formId, fields) {
             return $http.put("/api/YoProLiving/form/" + formId + "/field", fields);
+        }
+
+        function reorderFields(formId, fields){
+            return $http.post("/api/YoProLiving/form/" + formId + "/field/reorder", fields);
         }
     }
 })();

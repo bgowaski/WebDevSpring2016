@@ -11,6 +11,9 @@ module.exports = function(mongoose){
         lastName: String,
         emails: [String],
         phones: [String],
+        age: String,
+        Occupation: String,
+        Location: String,
         roles: [{
             type: String,
             enum: ["user","admin"]

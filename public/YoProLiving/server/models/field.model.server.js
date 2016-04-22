@@ -1,7 +1,7 @@
 /**
  * Created by bgowaski on 4/1/16.
  */
-module.exports = function(db,mongoose) {
+module.exports = function(mongoose) {
     var fieldSchema = require('./field.schema.server.js')(mongoose);
     var q = require('q');
     var FormModel = mongoose.model('Listing');

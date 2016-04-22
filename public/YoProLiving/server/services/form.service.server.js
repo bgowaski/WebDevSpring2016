@@ -2,11 +2,11 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, formModel) {
-    app.get("/api/assignment/form/:id", findFormById);
-    app.get("/api/assignment/forms/:userId", findAllForms);
-    app.post("/api/assignment/user/:userId/form", createForm);
-    app.put("/api/assignment/form/:id", updateForm);
-    app.delete("/api/assignment/form/:id", deleteForm);
+    app.get("/api/YoProLiving/form/:id", findFormById);
+    app.get("/api/YoProLiving/forms/:userId", findAllForms);
+    app.post("/api/YoProLiving/user/:userId/form", createForm);
+    app.put("/api/YoProLiving/form/:id", updateForm);
+    app.delete("/api/YoProLiving/form/:id", deleteForm);
 
     function findFormById(req, res) {
         var formId = req.params.id;

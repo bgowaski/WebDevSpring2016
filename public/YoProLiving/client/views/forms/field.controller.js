@@ -5,8 +5,35 @@
     "use strict";
     angular
         .module("YoProLivingApp")
+        .directive("fieldSortable", fieldSortable)
         .controller("FieldController", FieldController);
-FieldController.$inject=["$routeParams","FieldService","FormsService"];
+
+    function fieldSortable(){
+        var start = null;
+        var end = null;
+        function link(scope, element) {
+            $(element).sortable({
+                axis: "y",
+                start: function(event, ui) {
+                    start = ui.item.index();
+                },
+                stop: function(event, ui) {
+                    end = ui.item.index();
+                    var temp = scope.fields[start];
+                    scope.fields[start] = scope.fields[end];
+                    scope.fields[end] = temp;
+                    scope.applySort();
+                },
+                handle: ".dragMe"
+            });
+        }
+        return {
+            restrict: "EA",
+            link: link
+        }
+    }
+
+    FieldController.$inject=["$routeParams","FieldService","FormsService"];
     function FieldController($routeParams,
                              fieldService,
                              formService) {
@@ -33,6 +60,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
         vm.removeField = removeField;
         vm.closePopup = closePopup;
         vm.applyChanges = applyChanges;
+        vm.applySort = applySort;
 
         function init(){
             formService
@@ -42,13 +70,23 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 });
         }
         init();
+        function initFields(formId, fieldId, field){
+            fieldService
+                .updateField(formId, fieldId, field)
+                .then(function(response){
+                    vm.form = response.data;
+                });
+        }
+        initFields();
 
         function addField(fieldType){
+            console.log(fieldType);
             fieldService
                 .createFieldForForm(vm.formId, {type: fieldType})
                 .then(function(response){
                     if (response.data){
                         vm.form.fields.push(response.data);
+                        init();
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -79,6 +117,7 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                                     vm.selectedField.options[x].value + "\n";
                             }
                         }
+
                     }
                     else {
                         console.log("INCORRECT RESPONSE!");
@@ -141,6 +180,20 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                     }
                 });
         }
+
+        function applySort(){
+            fieldService
+                .reorderFields(vm.formId, $scope.fields)
+                .then(function(response){
+                    if(response.data){
+                        vm.form.fields = response.data;
+                    }
+                    else {
+                        console.log("INCORRECT RESPONSE!");
+                    }
+                })
+        }
+
         function applyChanges(field){
             if (field.optionsPretty){
                 var newOptions = [];
@@ -156,10 +209,15 @@ FieldController.$inject=["$routeParams","FieldService","FormsService"];
                 }
                 field.options = newOptions;
             }
+            console.log(field);
+            console.log("Field ID that is being sent : " + field._id);
+            //console.log(vm.selectedField.label);
+            field.label = vm.selectedField.label;
             fieldService
                 .updateField(vm.formId, field._id, field)
                 .then(function(response){
                     if(response.data){
+                        console.log(response.data);
                         for (var x in vm.form.fields) {
                             if (vm.form.fields[x]._id == response.data._id){
                                 vm.form.fields[x] = response.data;

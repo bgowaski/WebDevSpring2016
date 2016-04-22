@@ -12,7 +12,7 @@ module.exports = function(db,mongoose) {
         deleteField: deleteField,
         createField: createField,
         updateField: updateField,
-        reorderFields: reorderFields
+        reorderFormFields: reorderFormFields
     };
     return api;
 
@@ -117,16 +117,16 @@ module.exports = function(db,mongoose) {
         return deferred.promise;
     }
 
-    function reorderFields(formId, fields) {
+    function reorderFormFields(formId, fields) {
         var deferred = q.defer();
 
         FormModel.findById(formId, function (error, result) {
-            if (err) {
-                deferred.reject(err);
+            if (error) {
+                deferred.reject(error);
             } else {
                 result.fields = fields;
                 result.save(function(error, result){
-                    if (err) {
+                    if (error) {
                         deferred.reject(error);
                     } else {
                         deferred.resolve(result);

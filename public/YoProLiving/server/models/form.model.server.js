@@ -1,7 +1,7 @@
 /**
  * Created by bgowaski on 3/17/16.
  */
-module.exports = function(db,mongoose) {
+module.exports = function(mongoose) {
     var formSchema = require('./form.schema.server.js')(mongoose);
     var q = require('q');
 

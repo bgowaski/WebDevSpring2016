@@ -6,15 +6,15 @@
     angular
         .module("FormBuilderApp")
         .controller("FormsController", FormController);
-    FormController.$inject=["$scope","$rootScope","FormsService"];
     function FormController($scope, $rootScope, formService){
         var vm = this;
-        vm.form = {};
+        vm.form = null;
 
         vm.addForm = addForm;
         vm.updateForm = updateForm;
-        vm.selectForm = selectForm;
         vm.deleteForm = deleteForm;
+        vm.selectForm = selectForm;
+        vm.availableForms = [];
 
         console.log($rootScope.currentUser);
         function init() {

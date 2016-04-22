@@ -2,12 +2,12 @@
  * Created by bgowaski on 3/17/16.
  */
 module.exports = function(app, fieldModel) {
-    app.get("/api/assignment/form/:formId/field", findFields);
-    app.get("/api/assignment/form/:formId/field/:fieldId", findFieldById);
-    app.delete("/api/assignment/form/:formId/field/:fieldId", deleteField);
-    app.post("/api/assignment/form/:formId/field", createField);
-    app.put("/api/assignment/form/:formId/field/:fieldId", updateField);
-    app.post("/api/assignment/form/:formId/field/reorder", reorderFields);
+    app.get("/api/YoProLiving/form/:formId/field", findFields);
+    app.get("/api/YoProLiving/form/:formId/field/:fieldId", findFieldById);
+    app.delete("/api/YoProLiving/form/:formId/field/:fieldId", deleteField);
+    app.post("/api/YoProLiving/form/:formId/field", createField);
+    app.put("/api/YoProLiving/form/:formId/field/:fieldId", updateField);
+    app.post("/api/YoProLiving/form/:formId/field/reorder", reorderFields);
 
 
     function findFields(req, res) {

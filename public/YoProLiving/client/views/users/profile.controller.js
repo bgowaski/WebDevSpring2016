@@ -9,13 +9,15 @@
         vm.errorMessage = null;
 
         vm.currentUser = UserService.getCurrentUser();
-
         var preservedUserInfo = preserveInfo(vm.currentUser);
 
+        //function init() {
+        //    if (!vm.currentUser) {
+        //        $location.url("/home");
+        //    }
+        //}
         function init() {
-            if (!vm.currentUser) {
-                $location.url("/home");
-            }
+            delete vm.currentUser.password;
         }
         init();
 
@@ -37,7 +39,7 @@
             }
 
             UserService
-                .updateUser(vm.currentUser._id, vm.currentUser)
+                .updateUserProfile(vm.currentUser._id, vm.currentUser)
                 .then(function(response){
                     UserService.setCurrentUser(response.data);
                     preservedUserInfo = preserveInfo(response.data);

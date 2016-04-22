@@ -1,19 +1,16 @@
 <ul class="nav nav-sidebar" ng-controller="SidebarController">
 
-    <li ng-class="{'active' : $location.url().indexOf('home') > -1}">
-        <a href="#/home">Home</a>
-    </li>
-
-    <li ng-show="currentUser"
-        ng-class="{'active' : $location.url().indexOf('profile') > -1}">
-        <a href="#/profile">Profile</a>
-    </li>
-
-    <li ng-show="currentUser && currentUser.roles.indexOf('admin') > -1"
-        ng-class="{'active' : $location.url().indexOf('admin') > -1}"><a href="#/admin">Admin</a></li>
-
-    <li ng-show="currentUser"
-         ng-class="{'active' : $location.path() == '/forms' ||  $location.path() == '/fields'}">
-         <a href="#/forms">Forms</a>
-    </li>
+    <ul class="nav nav-sidebar">
+        <li ng-class="{'active' : $location.url().indexOf('home') >= 0}">
+            <a href="#/home">Home</a></li>
+        <li ng-show="currentUser"
+            ng-class="{'active' : $location.url().indexOf('profile') >= 0}">
+            <a href="#/profile">Profile</a></li>
+        <li ng-show="currentUser"
+            ng-class="{'active' : $location.url().indexOf('forms') >= 0 || $location.url().indexOf('fields') >= 0}">
+            <a href="#/forms">Forms</a></li>
+        <li ng-show="currentUser && currentUser.roles.indexOf('admin') >= 0"
+            ng-class="{'active' : $location.url().indexOf('admin') >= 0}">
+            <a href="#/admin">Admin</a></li>
+    </ul>
 </ul>

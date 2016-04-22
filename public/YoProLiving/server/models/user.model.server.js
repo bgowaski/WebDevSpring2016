@@ -1,7 +1,7 @@
 /**
  * Created by bgowaski on 3/17/16.
  */
-module.exports = function(db,mongoose) {
+module.exports = function(mongoose) {
     var userSchema = require('./user.schema.server.js')(mongoose);
     var q = require('q');
 
@@ -91,10 +91,15 @@ module.exports = function(db,mongoose) {
                 deferred.reject(error);
             }
             else {
-                result.firstName = user.firstName || users[x].firstName;
-                result.lastName = user.lastName || users[x].lastName;
-                result.username = user.username || users[x].username;
-                result.password = user.password || users[x].password;
+                result.firstName = user.firstName || result.firstName;
+                result.lastName = user.lastName || result.lastName;
+                result.username = user.username || result.username;
+                result.password = user.password || result.password;
+                result.email = user.email || result.email;
+                result.age = user.age || result.age;
+                result.occupation = user.occupation || result.occupation;
+                result.location = user.location || result.location;
+
                 result.save(function(error,result){
                     if (error){
                         deferred.reject(error);

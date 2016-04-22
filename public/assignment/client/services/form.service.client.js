@@ -2,11 +2,10 @@
  * Created by bgowaski on 3/17/16.
  */
 (function(){
-    'use strict';
 
     angular
         .module("FormBuilderApp")
-        .factory("FormsService", FormService);
+        .factory("formService", FormService);
 
     function FormService($http){
 
@@ -20,7 +19,8 @@
         return service;
 
         function createForm(userId, form){
-            return $http.post("/api/assignment/user/" + userId + "/form", form);
+            form.userId = userId;
+            return $http.post("/api/assignment/user/", form);
         }
 
         function findAllForms(userId){

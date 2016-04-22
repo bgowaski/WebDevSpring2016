@@ -13,14 +13,16 @@
         var service = {
 
             setCurrentUser: setCurrentUser,
+            loginUser: loginUser,
+            logoutUser: logoutUser,
             getCurrentUser: getCurrentUser,
             findUserByCredentials: findUserByCredentials,
-            findUserByUsername: findUserByUsername,
             findAllUsers: findAllUsers,
-            findUserById: findUserById,
-            deleteUser: deleteUser,
             createUser: createUser,
-            updateUser: updateUser
+            registerUser: registerUser,
+            deleteUser: deleteUser,
+            updateUserAdmin: updateUserAdmin,
+            updateUserProfile: updateUserProfile
 
         };
         return service;
@@ -29,36 +31,48 @@
             $rootScope.currentUser = user;
         }
 
+        function logoutUser(){
+            return $http.post("/api/assignment/logout");
+        }
+
+        function loginUser(user){
+            return $http.post("/api/assignment/login", user);
+        }
+
         function getCurrentUser(){
-            return $rootScope.currentUser;
+            return $http.get("/api/assignment/loggedin");
         }
 
-        function findUserByCredentials(username, password) {
-            return $http.post("/api/assignment/creds",{username:username, password:password});
+        function findUserByCredentials(username, password){
+            var credentials = {
+                username: username,
+                password: password
+            };
+            return $http.post("/api/assignment/creds", credentials);
         }
 
-        function findUserByUsername(username) {
-            return $http.get("/api/assignment/user?username=" + username)
+        function findAllUsers(){
+            return $http.get("/api/assignment/user");
         }
 
-        function findAllUsers() {
-            return $http.get("/api/assignment/user/");
+        function registerUser(user){
+            return $http.post("/api/assignment/register", user);
         }
 
-        function findUserById(userId) {
-            return $http.get("/api/assignment/user/" + userId + "/");
+        function createUser(user){
+            return $http.post("/api/assignment/user", user);
         }
 
-        function createUser(user) {
-            return $http.post("/api/assignment/user1/", user);
+        function deleteUser(userId){
+            return $http.delete("/api/assignment/user/" + userId);
         }
 
-        function deleteUser(userId) {
-            return $http.delete("/api/assignment/user/" + userId + "/");
+        function updateUserAdmin(userId, user){
+            return $http.put("/api/assignment/user/" + userId, user);
         }
 
-        function updateUser(userId, user) {
-            return $http.put("/api/assignment/user/" + userId + "/", user);
+        function updateUserProfile(userId, user){
+            return $http.put("/api/assignment/userprofile/" + userId, user);
         }
     }
 })();

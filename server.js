@@ -1,8 +1,9 @@
-var express       = require('express');
-var app           = express();
-var bodyParser    = require('body-parser');
-var multer        = require('multer');
-var cookieParser  = require('cookie-parser');
+var express = require('express');
+var app = express();
+var multer = require('multer');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var session       = require('express-session');
 app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -21,16 +22,20 @@ if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 }
 var db = mongoose.connect(connectionString);
 
-app.use(multer());
+console.log("secret");
+console.log(process.env.PASSPORT_SECRET);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+multer();
 app.use(cookieParser());
 app.use(session({
     secret: process.env.PASSPORT_SECRET || "My Secret",
     resave: true,
     saveUninitialized: true}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(__dirname + '/public'));
-
 
 app.use(function (req, res, next) {
     //res.sendfile((__dirname + '/index.html'));
@@ -40,9 +45,17 @@ app.use(function (req, res, next) {
 app.get('/', function(req, res){
     res.sendfile((__dirname + '/index.html'));
 });
-require('./public/assignment/server/app.js')(app, db, mongoose);
+
+var assignment = require("./public/assignment/server/models/user.model.server.js")(db, mongoose);
+var project = require("./public/YoProLiving/server/models/user.model.server.js")(db, mongoose);
+
+require('./public/assignment/server/app.js')(app, db, mongoose, assignment);
 //require('./public/experiments/server/app.js')(app);
-require('./public/YoProLiving/server/app.js')(app, db, mongoose);
+//require('./public/YoProLiving/server/app.js')(app, db,mongoose, project);
+require('./public/passport/security.js')(app, assignment, project);
+
+
+
 
 app.listen(port, ipaddress, function(){
     console.log('listening on: ' + ipaddress + ':' + port);
