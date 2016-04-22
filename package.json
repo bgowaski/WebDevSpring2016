@@ -26,6 +26,7 @@
     "bcrypt": "^0.8.5",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.0",
+    "brewerydb-node": "0.0.1",
     "cookie-parser": "^1.4.1",
     "express": "~3.4.4",
     "express-session": "^1.13.0",
