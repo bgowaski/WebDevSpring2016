@@ -14,7 +14,7 @@
                 <li ng-hide="currentUser"><a href="#/register">Register</a></li>
                 <li ng-hide="currentUser"><a href="#/login">Login</a></li>
                 <li ng-show="currentUser"><a href="#/profile">{{currentUser.username}}</a></li>
-                <li ng-show="currentUser"><a ng-click="model.logout()">Logout</a></li>
+                <li ng-show="currentUser"><a ng-click="header.logout()">Logout</a></li>
                 <li ng-show="currentUser && currentUser.roles.indexOf('admin') >= 0"><a href="#/admin">Admin</a></li>
             </ul>
         </div>

@@ -36,6 +36,7 @@
         }
 
         function loginUser(user){
+            console.log("trying to login");
             return $http.post("/api/assignment/login", user);
         }
 
@@ -72,6 +73,7 @@
         }
 
         function updateUserProfile(userId, user){
+            console.log(userId);
             return $http.put("/api/assignment/userprofile/" + userId, user);
         }
     }

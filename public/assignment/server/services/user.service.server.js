@@ -2,10 +2,10 @@
  * Created by bgowaski on 3/17/16.
  */
 var mongoose = require('mongoose');
-var passport = require('passport');
+//var passport = require('passport');
 var bcrypt = require('bcrypt-nodejs');
 
-module.exports = function(app, userModel) {
+module.exports = function(app, userModel, passport) {
 
     var auth = authorized;
     app.post("/api/assignment/user", auth, createUser);
@@ -21,22 +21,23 @@ module.exports = function(app, userModel) {
     app.post("/api/assignment/login", passport.authenticate('assignment'), loginUser);
     app.get("/api/assignment/loggedin", loggedIn);
 
-    function localStrategy(username, password, done) {
-        userModel
-            .findUserByUsername(username)
-            .then(
-                function(user) {
-                    if(user && bcrypt.compareSync(password, user.password)) {
-                        return done(null, user);
-                    } else {
-                        return done(null, false);
-                    }
-                },
-                function(error) {
-                    if (error) { return done(error); }
-                }
-            );
-    }
+    //function localStrategy(username, password, done) {
+    //    userModel
+    //        .findUserByUsername(username)
+    //        .then(
+    //            function(user) {
+    //                if(user && bcrypt.compareSync(password, user.password)) {
+    //                    console.log("User authenticated");
+    //                    return done(null, user);
+    //                } else {
+    //                    return done(null, false);
+    //                }
+    //            },
+    //            function(error) {
+    //                if (error) { return done(error); }
+    //            }
+    //        );
+    //}
 
 
     function isAdmin(user) {
@@ -48,6 +49,7 @@ module.exports = function(app, userModel) {
     }
 
     function logoutUser(req, res) {
+        console.log("User logged out");
         req.logOut();
         res.send(200);
     }
@@ -240,6 +242,8 @@ module.exports = function(app, userModel) {
         } else {
             newUser.roles = ["user"];
         }
+        console.log("Creating new user")
+        console.log(newUser)
         userModel
             .findUserByUsername(newUser.username)
             .then(

@@ -49,10 +49,10 @@ app.get('/', function(req, res){
 var assignment = require("./public/assignment/server/models/user.model.server.js")(db, mongoose);
 var project = require("./public/YoProLiving/server/models/user.model.server.js")(db, mongoose);
 
-require('./public/assignment/server/app.js')(app, db, mongoose, assignment);
+require('./public/assignment/server/app.js')(app, db, mongoose, assignment, passport);
 //require('./public/experiments/server/app.js')(app);
 //require('./public/YoProLiving/server/app.js')(app, db,mongoose, project);
-require('./public/passport/security.js')(app, assignment, project);
+require('./public/passport/security.js')(app, assignment, project, passport);
 
 
 
