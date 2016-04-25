@@ -13,7 +13,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#/listing">Listings</a></li>
-        <li ng-show="currentUser"><a href="#/favorites">Favorites</a></li>
         <li ng-class="{'active' : model.$location.url().indexOf('register') != -1}" ng-hide="currentUser">
           <a href="#/register">Register</a></li>
         <li ng-class="{'active' : model.$location.url().indexOf('login') != -1}" ng-hide="currentUser">
