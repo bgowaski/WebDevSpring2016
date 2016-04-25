@@ -9,8 +9,9 @@
         vm.searchAll = searchAll;
         vm.select = select;
 
-        function searchAll(name){
-            YoProLivingService.searchAll({q: name})
+        function searchAll(location){
+            console.log(location);
+            YoProLivingService.searchAll({q: location})
                 .then(function(ret) {
                     vm.found = ret.data;
                     $location.path('/home');
@@ -18,9 +19,7 @@
         }
 
         function select(item){
-            if (item.type == 'listing'){
-                $location.path('/listing/'+item.id);
-            }
+            $location.path('/listing/'+item._id);
         }
     }
 })();

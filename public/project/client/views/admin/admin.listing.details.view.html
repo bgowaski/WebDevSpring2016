@@ -9,6 +9,67 @@
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
       <h2 class="sub-header">Listing Details</h2>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="location" class="col-sm-2 control-label">Location</label>
+          <div class="col-sm-10">
+            <select id="location" placeholder="Location" ng-model="model.listing.location" class="form-control">
+              <option value="" selected>All</option>
+              <option value="allston">Allston</option>
+              <option value="backbay">Back Bay</option>
+              <option value="bayvillage">Bay Village</option>
+              <option value="beacon">Beacon Hill</option>
+              <option value="brighton">Brighton</option>
+              <option value="charlestown">Charlestown</option>
+              <option value="chinatown">Chinatown / Leather District</option>
+              <option value="dorchester">Dorchester</option>
+              <option value="downtown">Downtown</option>
+              <option value="eastboston">East Boston</option>
+              <option value="fenwaykenmore">Fenway Kenmore</option>
+              <option value="hyde">Hyde Park</option>
+              <option value="jamaica">Jamaica Plain</option>
+              <option value="mattapan">Mattapan</option>
+              <option value="middorchester">Mid Dorchester</option>
+              <option value="missionhill">Mission Hill</option>
+              <option value="northend">North End</option>
+              <option value="roslindale">Roslindale</option>
+              <option value="roxbury">Roxbury</option>
+              <option value="southboston">South Boston</option>
+              <option value="southend">South End</option>
+              <option value="westend">West End</option>
+              <option value="westroxbury">West Roxbury</option>
+            </select>          </div>
+        </div>
+        <div class="form-group">
+          <label for="Address" class="col-sm-2 control-label">Address</label>
+          <div class="col-sm-10">
+            <input ng-model="model.listing.address" type="text" class="form-control" id="address" placeholder="1 Boston St. Boston, MA 02115">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="details" class="col-sm-2 control-label">Details</label>
+          <div class="col-sm-10">
+            <input ng-model="model.listing.details" type="text" class="form-control" id="details" placeholder="Details">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="pets" class="col-sm-2 control-label">Pets</label>
+          <div class="col-sm-10">
+            <input ng-model="model.listing.pets" type="text" class="form-control" id="pets" placeholder="Yes">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="parking" class="col-sm-2 control-label">Parking</label>
+          <div class="col-sm-10">
+            <input ng-model="model.listing.parking" type="text" class="form-control" id="parking" placeholder="No">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button ng-click="model.update(model.listing);" class="btn btn-default">Update</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

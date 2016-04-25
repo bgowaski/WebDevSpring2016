@@ -1,23 +1,10 @@
 var q = require("q");
 var mongoose = require('mongoose');
 
-module.exports = function(listingdb) {
+module.exports = function() {
 
-    var objectSchema = new mongoose.Schema({
-        location: String,
-        description: String,
-        other: [String]
-    });
-
-    var ListingSchema = new mongoose.Schema(
-        {
-            name: String,
-            detail: [objectSchema],
-            userId: String
-        }, {collection: "ListingModel"});
-
+    var ListingSchema = require('./listing.schema.js')(mongoose);
     var ListingModel = mongoose.model('ListingModel', ListingSchema);
-
 
     return {
         searchListings : searchListings,
@@ -26,7 +13,6 @@ module.exports = function(listingdb) {
         getCategoryById : getCategoryById,
         getListingById : getListingById,
         getListingByIds : getListingByIds,
-        getListingByParams : getListingByParams,
         getListingsByLocation : getListingsByLocation,
         deleteListingById: deleteListingById,
         createListingForUser: createListingForUser,
@@ -38,33 +24,29 @@ module.exports = function(listingdb) {
 
 
     //Search Functions
-    function searchListings(params, f){
-        return listingdb.search.listings(params, f);
+    function searchListings(params){
+        return ListingModel.search.listings(params);
     }
-    function searchAll(params, f){
-        return listingdb.search.all(params, f);
+    function searchAll(params){
+        return ListingModel.find();
     }
 
     //Category
     function getAllCategories(f) {
-        return listingdb.category.all(f);
+        return ListingModel.category.all(f);
     }
     function getCategoryById(id, f) {
-        return listingdb.category.getById(Number(id), f);
+        return ListingModel.category.getById(Number(id), f);
     }
-
     //Listings
-    function getListingById(id, f){
-        return listingdb.listings.getById(id, {withLocations: 'Y', withSocialAccounts: 'Y'}, f);
+    function getListingById(id){
+        return ListingModel.findById(id);
     }
     function getListingByIds(ids, f){
-        return listingdb.listings.getById(ids, {}, f);
-    }
-    function getListingByParams(params, f){
-        return listingdb.listings.find(params, f);
+        return ListingModel.getById(ids, {}, f);
     }
     function getListingsByLocation(location){
-        return listingdb.listings.find(location);
+        return ListingModel.find({location: location});
     }
 
     // Form editing
@@ -100,34 +82,11 @@ module.exports = function(listingdb) {
     }
 
     function updateListingById(listingId, listing){
-        var deferred = q.defer();
-        ListingModel.findByIdAndUpdate(listingId, listing, function (err, doc) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(doc);
-            }
-        });
-        return deferred.promise;
+        return ListingModel.update({_id: listingId}, {$set: listing})
     }
 
     function deleteListingById(listingId){
-        var deferred = q.defer();
-        ListingModel.findById(listingId, function (err, doc) {
-            if (err) {
-                deferred.reject(err);
-            } else {
-                doc.remove();
-                ListingModel.find(function (err, doc) {
-                    if (err) {
-                        deferred.reject(err);
-                    } else {
-                        deferred.resolve(doc);
-                    }
-                });
-            }
-        });
-        return deferred.promise;
+        return ListingModel.findById(listingId).remove();
     }
 
     function findListingByName(name){

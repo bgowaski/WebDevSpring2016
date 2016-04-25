@@ -21,11 +21,26 @@ module.exports = function(app, model) {
     }
 
     function searchAll(req, res){
-        var params = req.body;
-        model.searchAll(params, function(err, list)
-        {
-            res.json(list);
-        });
+        var location = req.body.q;
+        if (location) {
+            model.getListingsByLocation(location)
+                .then(
+                    function (response) {
+                        res.json(response);
+                    },
+                    function (err) {
+                        re.send(500);
+                    });
+        } else {
+            model.searchAll(location)
+                .then(
+                    function (response) {
+                        res.json(response);
+                    },
+                    function (err) {
+                        re.send(500);
+                    });
+        }
     }
 
     function getAllCategories(req, res){
@@ -45,10 +60,16 @@ module.exports = function(app, model) {
 
     function getListingById(req, res){
         var id = req.params.id;
-        model.getListingById(id, function(err, list)
-        {
-            res.json(list);
-        });
+        model.getListingById(id)
+            .then(
+                function(response){
+                    res.json(response);
+                },
+                function (err) {
+                    res.send(500);
+                }
+            );
+
     }
     function getListingByIds(req, res){
         var ids = req.body;
@@ -93,7 +114,7 @@ module.exports = function(app, model) {
         model.deleteListingById(listingId)
             .then(
                 function (doc) {
-                    res.json(doc);
+                    res.send(doc);
                 },
                 function ( err ) {
                     res.status(400).send(err);
@@ -131,6 +152,7 @@ module.exports = function(app, model) {
     function updateListingById(req, res){
         var listing = req.body;
         var listingId = req.params.listingId;
+        delete listing._id;
         model.updateListingById(listingId, listing)
             .then(
                 function (doc) {

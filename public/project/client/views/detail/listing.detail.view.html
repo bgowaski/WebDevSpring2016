@@ -20,15 +20,14 @@
         <img ng-src="{{model.listing.images.large}}" class="img-responsive">
       </div>
       <div class="col-sm-6 col-xs-6">
-        <h5>Located in {{model.listing.locations[0].locality}}, {{model.listing.locations[0].region}}<br>
+        <h5>Located in {{model.listing.location}}, {{model.listing.locations[0].region}}<br>
           {{model.listing.locations[0].streetAddress}}<br>
           {{model.listing.locations[0].phone}}</h5>
         <h5>Description:</h5>
-        <p ng-show="model.listing.description">{{model.listing.description}}</p>
-        <p ng-show="model.listing.locations">Hours of Operation: {{model.listing.locations[0].hoursOfOperation}}</p>
-        <p ng-show="model.listing.established">Established: {{model.listing.established}}</p>
-        <a ng-show="model.listing.website" href="{{model.listing.website}}">{{model.listing.website}}</a><br>
-        <a ng-show="model.listing.socialAccounts" href="{{model.listing.socialAccounts[0].link}}">{{model.listing.socialAccounts[0].link}}</a>
+        <p ng-show="model.listing.pets">{{model.listing.description}}</p>
+        <p ng-show="model.listing.details">Details: {{model.listing.details}}</p>
+        <p ng-show="model.listing.utilities">Established: {{model.listing.established}}</p>
+        <img ng-show="model.listing.image" ng-src="{{model.listing.image}}"/>
       </div>
       <div ng-show="currentUser" class="col-sm-2 col-xs-2">
         <button class="btn btn-primary"

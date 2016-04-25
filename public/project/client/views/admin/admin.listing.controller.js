@@ -12,7 +12,6 @@
         vm.updateListing = updateListing;
         vm.deleteListing = deleteListing;
         vm.selectListing = selectListing;
-        vm.clickListing = clickListing;
         vm.updating = 1;
 
         function init(){
@@ -52,20 +51,24 @@
         }
         function deleteListing(listing){
             YoProLivingService.deleteListingById(listing._id)
-                .then(function(listings) {
-                    vm.listings = listings.data;
+                .then(function(response) {
+                    console.log("response " + response);
+                    console.log("id to remove" + listing._id);
+                    for (var x in vm.listings){
+                        console.log("comparing to " + vm.listings[x]._id);
+                        if (vm.listings[x]._id == listing._id){
+                            console.log("splicing at " + x);
+                            vm.listings.splice(x,1);
+                            break;
+                        }
+                    }
                     $location.path('/AdminListing');
                 });
         }
 
         function selectListing(index){
-            vm.selectedListingIndex = index;
-            vm.newListing = vm.listings[index];
-            vm.updating = 0;
+            $location.path('/AdminListing/' + vm.listings[index]._id);
         }
 
-        function clickListing(listing){
-            $location.path('/AdminListing/'+listing._id);
-        }
     }
 })();

@@ -21,7 +21,33 @@
           </thead>
           <tbody>
           <tr>
-            <td><input ng-model="model.newListing.name" type="text" class="form-control" id="newListingName" placeholder="name"></td>
+            <td>
+              <select id="newListingLocation" placeholder="Location" label="Location:" ng-model="model.newListing.location" class="form-control">
+                <option value="allston">Allston</option>
+                <option value="backbay">Back Bay</option>
+                <option value="bayvillage">Bay Village</option>
+                <option value="beacon">Beacon Hill</option>
+                <option value="brighton">Brighton</option>
+                <option value="charlestown">Charlestown</option>
+                <option value="chinatown">Chinatown / Leather District</option>
+                <option value="dorchester">Dorchester</option>
+                <option value="downtown">Downtown</option>
+                <option value="eastboston">East Boston</option>
+                <option value="fenwaykenmore">Fenway Kenmore</option>
+                <option value="hyde">Hyde Park</option>
+                <option value="jamaica">Jamaica Plain</option>
+                <option value="mattapan">Mattapan</option>
+                <option value="middorchester">Mid Dorchester</option>
+                <option value="missionhill">Mission Hill</option>
+                <option value="northend">North End</option>
+                <option value="roslindale">Roslindale</option>
+                <option value="roxbury">Roxbury</option>
+                <option value="southboston">South Boston</option>
+                <option value="southend">South End</option>
+                <option value="westend">West End</option>
+                <option value="westroxbury">West Roxbury</option>
+              </select>
+            </td>
             <td>
               <a><span class="glyphicon big glyphicon-plus"
                        ng-click="model.addListing(model.newListing)" ng-show="model.updating" aria-hidden="true"></span></a>
@@ -30,7 +56,7 @@
             </td>
           </tr>
           <tr ng-repeat="listing in model.listings | orderBy:orderByField:reverseSort" ng-class="{'success' : $index == selectedListingIndex}">
-            <td>{{listing.name}}</td>
+            <td>{{listing.l}}</td>
             <td>
               <a><span ng-click="model.deleteListing(listing)" class="glyphicon big glyphicon-remove" aria-hidden="true"></span></a>
               <a><span ng-click="model.selectListing($index)" class="glyphicon big glyphicon-pencil" aria-hidden="true"></span></a>

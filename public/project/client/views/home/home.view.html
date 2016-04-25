@@ -3,10 +3,34 @@
     <div class="main">
       <p>Search for your future home by typing in your desired location!</p>
       <div class="input-group">
-        <input ng-model="model.name" type="text" class="form-control"
-               placeholder="Boston">
+        <select id="newListingLocation" placeholder="Location" label="Location:" ng-model="model.location" class="form-control">
+          <option value="" selected>All</option>
+          <option value="allston">Allston</option>
+          <option value="backbay">Back Bay</option>
+          <option value="bayvillage">Bay Village</option>
+          <option value="beacon">Beacon Hill</option>
+          <option value="brighton">Brighton</option>
+          <option value="charlestown">Charlestown</option>
+          <option value="chinatown">Chinatown / Leather District</option>
+          <option value="dorchester">Dorchester</option>
+          <option value="downtown">Downtown</option>
+          <option value="eastboston">East Boston</option>
+          <option value="fenwaykenmore">Fenway Kenmore</option>
+          <option value="hyde">Hyde Park</option>
+          <option value="jamaica">Jamaica Plain</option>
+          <option value="mattapan">Mattapan</option>
+          <option value="middorchester">Mid Dorchester</option>
+          <option value="missionhill">Mission Hill</option>
+          <option value="northend">North End</option>
+          <option value="roslindale">Roslindale</option>
+          <option value="roxbury">Roxbury</option>
+          <option value="southboston">South Boston</option>
+          <option value="southend">South End</option>
+          <option value="westend">West End</option>
+          <option value="westroxbury">West Roxbury</option>
+        </select>
         <span class="input-group-btn">
-          <button ng-click="model.searchAll(model.name)" class="btn btn-primary btn-block">Search</button>
+          <button ng-click="model.searchAll(model.location)" class="btn btn-primary btn-block">Search</button>
         </span>
       </div>
       <table class="table table-striped table-hover table-bordered">
@@ -15,9 +39,9 @@
             ng-class="{'success' : $index == selectedFormIndex}"
             ng-click="model.select(item)">
           <td class="media-body">
-            <h4>{{item.name}}</h4>
+            <h4>{{item.location}}</h4>
             <p>{{item.type}}<br></p>
-            <p> {{item.description}}</p>
+            <p> {{item.details}}</p>
           </td>
         </tr>
         </tbody>
