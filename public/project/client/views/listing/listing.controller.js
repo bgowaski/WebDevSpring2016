@@ -6,28 +6,20 @@
 
     function ListingController(YoProLivingService, $location) {
         var vm = this;
-        vm.selectListing = selectListing;
-        vm.searchListing = searchListing;
+        vm.searchAll = searchAll;
+        vm.select = select;
 
-        function init(){
-        }
-        return init();
-
-        function selectListing(listing){
-            $location.path('/listing/'+listing.id);
-        }
-
-        function searchListing(name){
-            vm.listings = [];
-            YoProLivingService.searchAll({q: name})
-                .then(function(listingList) {
-                    for (var i  in listingList.data){
-                        if (lisitngList.data[i].type == 'listing'){
-                            vm.listings.push(lisitngList.data[i]);
-                        }
-                    }
+        function searchAll(location){
+            console.log(location);
+            YoProLivingService.searchAll({q: location})
+                .then(function(ret) {
+                    vm.found = ret.data;
+                    $location.path('/listing');
                 });
-            $location.path('/listing');
+        }
+
+        function select(item){
+            $location.path('/listing/'+item._id);
         }
     }
 })();

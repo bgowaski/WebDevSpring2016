@@ -12,7 +12,7 @@ module.exports = function(mongoose) {
         //    type: Boolean,
         //    default: false
         //},
-        utilities: [String],
+        utilities: String,
         details: String,
         parking: String,
         contact: String,

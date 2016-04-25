@@ -69,14 +69,6 @@
                         loggedin: checkCurrentUser
                     }
                 })
-                .when("/favorites", {
-                    templateUrl: "views/favorites/favorites.view.html",
-                    controller: "FavoritesController",
-                    controllerAs: "model",
-                    resolve: {
-                        loggedin: checkLoggedin
-                    }
-                })
                 .otherwise({
                     redirectTo: "/home"
                 });

@@ -6,7 +6,7 @@
 <body>
 <div class="container-fluid">
   <div class="main">
-    <h1 class="page-header">Details</h1>
+    <h1 class="page-header">Listing Details</h1>
     <div class="row">
       <div class="text-center">
         <h4 ng-show="model.listing.name">{{model.listing.address}}</h4>
@@ -24,7 +24,8 @@
           Address: {{model.listing.address}}<br>
           Contact: {{model.listing.contact}}</h5>
         <h5>Description:</h5>
-        <p ng-show="model.listing.utilities">Number of Bedrooms: {{model.listing.bedrooms}}</p>
+        <p ng-show="model.listing.rent">Monthly Rent: {{model.listing.rent}}</p>
+        <p ng-show="model.listing.bedrooms">Number of Bedrooms: {{model.listing.bedrooms}}</p>
         <p ng-show="model.listing.pets">Pets: {{model.listing.pets}}</p>
         <p ng-show="model.listing.details">Details: {{model.listing.details}}</p>
         <p ng-show="model.listing.utilities">Utilities Included: {{model.listing.utilities}}</p>
